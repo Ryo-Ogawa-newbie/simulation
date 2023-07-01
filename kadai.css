@@ -1,1 +1,5 @@
-
+#panel {
+  float: left;
+  margin-right: auto;
+  width: 180px;
+}
