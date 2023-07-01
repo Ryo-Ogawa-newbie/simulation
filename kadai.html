@@ -7,20 +7,10 @@
 <body>
   <div id="contents">
     <div id="panel">
-    <div contenteditable="true" oninput="updateNumber(event)"></div>
-      <script>
-        function updateNumber(event) {
-          var div = event.target;
-          var text = div.innerText.replace(/\n/g, ''); // 改行を削除
-          div.innerText = text; // 改行を削除したテキストを再設定
-          var number = parseInt(text);
-          if (!isNaN(number)) {
-            console.log("入力された数字: " + number);
-          } else {
-            console.log("数字を入力してください");
-          }
-        }
-      </script>
+      <div>
+        <form>
+          <imput type="number">
+        </form>
       <div>
         <button type="button" id="start" class="normal">start</button>
         <button type="button" id="clear" class="normal">clear</button>
