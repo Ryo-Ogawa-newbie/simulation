@@ -7,18 +7,16 @@
 <body>
   <div id="contents">
     <div id="panel">
-     <div contenteditable="true" oninput="updateNumber()"></div>
+    <div contenteditable="true" oninput="updateNumber(event)"></div>
       <script>
-        function updateNumber() {
-          var div = document.querySelector('div');
-          var text = div.innerText;
+        function updateNumber(event) {
+          var div = event.target;
+          var text = div.innerText.replace(/\n/g, ''); // 改行を削除
+          div.innerText = text; // 改行を削除したテキストを再設定
           var number = parseInt(text);
-          
           if (!isNaN(number)) {
-            // 数字が入力されている場合の処理
             console.log("入力された数字: " + number);
           } else {
-            // 数字以外が入力されている場合の処理
             console.log("数字を入力してください");
           }
         }
