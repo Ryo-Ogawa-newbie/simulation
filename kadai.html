@@ -7,9 +7,22 @@
 <body>
   <div id="contents">
     <div id="panel">
-      <div>
-        <div contenteditable="true"></div>
-      </div>
+     <div contenteditable="true" oninput="updateNumber()"></div>
+      <script>
+        function updateNumber() {
+          var div = document.querySelector('div');
+          var text = div.innerText;
+          var number = parseInt(text);
+          
+          if (!isNaN(number)) {
+            // 数字が入力されている場合の処理
+            console.log("入力された数字: " + number);
+          } else {
+            // 数字以外が入力されている場合の処理
+            console.log("数字を入力してください");
+          }
+        }
+      </script>
       <div>
         <button type="button" id="start" class="normal">start</button>
         <button type="button" id="clear" class="normal">clear</button>
