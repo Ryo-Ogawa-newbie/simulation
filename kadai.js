@@ -1,3 +1,13 @@
+function updateEquation() {
+  var coefficientA = document.getElementById('inputA').value;
+  var coefficientB = document.getElementById('inputB').value;
+  var coefficientC = document.getElementById('inputC').value;
+  
+  document.getElementById('coefficientA').textContent = coefficientA;
+  document.getElementById('coefficientB').textContent = coefficientB;
+  document.getElementById('coefficientC').textContent = coefficientC;
+}
+
 var showButton = document.getElementById('showButton');
 var inputField = document.getElementById('inputField');
 var submitp = document.getElementById('submitp');
