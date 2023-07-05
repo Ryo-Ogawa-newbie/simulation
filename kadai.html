@@ -11,6 +11,18 @@
         <div>
           <p>求めたい方程式</p>
         </div>
+        <div>
+          <span id="coefficientA"></span>x^2 +
+          <span id="coefficientB"></span>x +
+          <span id="coefficientC"></span> = 0
+        </div>
+        <br>
+        <div>
+          <input type="number" id="inputA" placeholder="□">
+          <input type="number" id="inputB" placeholder="□">
+          <input type="number" id="inputC" placeholder="□">
+          <button onclick="updateEquation()">更新</button>
+        </div>
          <div>
           <button type="button" id="start" class="normal">二分法</button>
           <button type="button" id="showButton" class="normal">ニュートン法</button>
