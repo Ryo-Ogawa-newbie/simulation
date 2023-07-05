@@ -1,6 +1,6 @@
 var showButton = document.getElementById('showButton');
 var inputField = document.getElementById('inputField');
-var submitButton = document.getElementById('submitButton');
+var submitp = document.getElementById('submitp');
 
 showButton.addEventListener('click', function() {
   inputField.style.display = 'block';
