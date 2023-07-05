@@ -3,6 +3,9 @@
   margin-right: auto;
   width: 180px;
 }
+input {
+  width: 50px;
+}
 #inputField {
   display: none;
 }
