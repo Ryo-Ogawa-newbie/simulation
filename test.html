@@ -57,10 +57,15 @@
       if (method === 'bisection') {
         methodHeader.textContent = "解の範囲";
         inputLabel.textContent = "数字を自由入力 [a, b]";
-        input.placeholder = "b";
-        input.id = "inputUpper";  // IDを修正
+        input.placeholder = "a";
+        input.id = "inputLower";
         methodInputs.bisection.lower = null;
         methodInputs.bisection.upper = null;
+        
+        var inputUpper = document.createElement("input");
+        inputUpper.placeholder = "b";
+        inputUpper.id = "inputUpper";
+        methodInputsContainer.appendChild(inputUpper);
       } else if (method === 'newton') {
         methodHeader.textContent = "初期推定値";
         inputLabel.textContent = "数字を自由入力";
@@ -74,8 +79,7 @@
       methodInputsContainer.appendChild(input);
     }
     
-
-  // 二分法の計算
+   // 二分法の計算
   function calculateBisection(a, b, c, lower, upper, iterationCount) {
     var results = [];
     for (var i = 0; i < iterationCount; i++) {
@@ -118,6 +122,5 @@
     return 2 * a * x + b;
   }
 </script>
-  </script>
 </body>
 </html>
