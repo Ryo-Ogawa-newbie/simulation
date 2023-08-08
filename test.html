@@ -23,35 +23,49 @@
     }
   </script>
   <br>
-  <button onclick="showInputFields('bisection')">二分法</button>
-  <button onclick="showInputFields('newton')">ニュートン法</button>
+  <button onclick="showInputs('bisection')">二分法</button>
+  <button onclick="showInputs('newton')">ニュートン法</button>
   
   <div id="inputContainer"></div>
   
   <script>
-    function showInputFields(method) {
+    function showInputs(method) {
       var inputContainer = document.getElementById("inputContainer");
       inputContainer.innerHTML = "";
       
-      var header = document.createElement("h2");
-      var inputLabel1 = document.createElement("label");
-      var inputLabel2 = document.createElement("label");
-      var input1 = document.createElement("input");
-      var input2 = document.createElement("input");
+      var rangeHeader = document.createElement("h2");
+      var rangeInputLabel = document.createElement("label");
+      var rangeInput1 = document.createElement("input");
+      var rangeInput2 = document.createElement("input");
       
-      header.textContent = method === 'bisection' ? "解の範囲" : "初期推定値";
-      
-      
-      [input1.placeholder = "4",input2.placeholder = "5"];
-      
-      inputContainer.appendChild(header);
-      inputContainer.appendChild(inputLabel1);
-      inputContainer.appendChild(input1);
+      var initialHeader = document.createElement("h2");
+      var initialInputLabel = document.createElement("label");
+      var initialInput = document.createElement("input");
       
       if (method === 'bisection') {
-        inputContainer.appendChild(inputLabel2);
-        inputContainer.appendChild(input2);
+        rangeHeader.textContent = "解の範囲";
+        rangeInputLabel.textContent = "数字を自由入力[□, □]";
+        initialHeader.textContent = "初期推定値";
+        initialInputLabel.textContent = "数字を自由入力";
+      } else if (method === 'newton') {
+        rangeHeader.textContent = "解の範囲";
+        rangeInputLabel.textContent = "リセットされます";
+        initialHeader.textContent = "初期推定値";
+        initialInputLabel.textContent = "数字を自由入力";
       }
+      
+      rangeInput1.placeholder = "□";
+      rangeInput2.placeholder = "□";
+      initialInput.placeholder = "□";
+      
+      inputContainer.appendChild(rangeHeader);
+      inputContainer.appendChild(rangeInputLabel);
+      inputContainer.appendChild(rangeInput1);
+      inputContainer.appendChild(rangeInput2);
+      
+      inputContainer.appendChild(initialHeader);
+      inputContainer.appendChild(initialInputLabel);
+      inputContainer.appendChild(initialInput);
     }
   </script>
 </body>
