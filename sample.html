@@ -7,6 +7,21 @@
   <h2>求めたい方程式</h2>
   <p id="equationDisplay">ax^2 + bx + c = 0</p>
   
+  <input type="number" id="inputA" placeholder="a">
+  <input type="number" id="inputB" placeholder="b">
+  <input type="number" id="inputC" placeholder="c">
+  <button onclick="updateEquation()">更新</button>
+  
+  <script>
+    function updateEquation() {
+      var inputA = document.getElementById("inputA").value;
+      var inputB = document.getElementById("inputB").value;
+      var inputC = document.getElementById("inputC").value;
+      
+      var equationDisplay = document.getElementById("equationDisplay");
+      equationDisplay.textContent = inputA + "x^2 + " + inputB + "x + " + inputC + " = 0";
+    }
+  </script>
   <button onclick="showInputFields('bisection')">二分法</button>
   <button onclick="showInputFields('newton')">ニュートン法</button>
   
