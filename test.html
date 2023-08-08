@@ -1,55 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Button Example</title>
+  <title>Input Display Example</title>
 </head>
 <body>
-  <button id="button1" onclick="showSolutionRange()">ボタン１</button>
-  <button id="button2" onclick="showInitialGuess()">ボタン２</button>
-  <button id="resetButton" onclick="reset()">リセット</button>
+  <button onclick="showRangeInput()">ボタン1</button>
+  <button onclick="showInitialValueInput()">ボタン2</button>
   
-  <div id="inputArea"></div>
-  <div id="resultArea"></div>
+  <div id="inputContainer">
+    <!-- Input fields will be displayed here -->
+  </div>
+  
+  <button onclick="resetInputs()">リセット</button>
   
   <script>
-    var currentResult = ""; // 現在表示されている結果を格納する変数
-    
-    function showSolutionRange() {
-      currentResult = "解の範囲を表示"; // ここで解の範囲を生成
-      updateResultArea();
-      
-      var inputArea = document.getElementById("inputArea");
-      inputArea.innerHTML = '<input type="number" id="inputNumber" placeholder="数字を入力"><button onclick="updateNumber()">更新</button>';
+    function showRangeInput() {
+      var inputContainer = document.getElementById("inputContainer");
+      inputContainer.innerHTML = `
+        <p>解の範囲: <input type="text" id="rangeInput"></p>
+      `;
     }
     
-    function showInitialGuess() {
-      currentResult = "初期推定値を表示"; // ここで初期推定値を生成
-      updateResultArea();
-      
-      var inputArea = document.getElementById("inputArea");
-      inputArea.innerHTML = '<input type="number" id="inputNumber" placeholder="数字を入力"><button onclick="updateNumber()">更新</button>';
+    function showInitialValueInput() {
+      var inputContainer = document.getElementById("inputContainer");
+      inputContainer.innerHTML = `
+        <p>初期推定値: <input type="text" id="initialValueInput"></p>
+      `;
     }
     
-    function reset() {
-      currentResult = "";
-      updateResultArea();
-      clearInputArea();
-    }
-    
-    function updateResultArea() {
-      var resultArea = document.getElementById("resultArea");
-      resultArea.textContent = currentResult;
-    }
-    
-    function clearInputArea() {
-      var inputArea = document.getElementById("inputArea");
-      inputArea.innerHTML = '';
-    }
-    
-    function updateNumber() {
-      var inputNumber = document.getElementById("inputNumber").value;
-      alert("入力された数字: " + inputNumber);
+    function resetInputs() {
+      var inputContainer = document.getElementById("inputContainer");
+      inputContainer.innerHTML = "";
     }
   </script>
 </body>
 </html>
+
