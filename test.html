@@ -33,21 +33,16 @@
       var inputContainer = document.getElementById("inputContainer");
       inputContainer.innerHTML = "";
       
-      var header = document.createElement("h2");
       var inputLabel = document.createElement("label");
       var input = document.createElement("input");
       
       if (method === 'bisection') {
-        header.textContent = "解の範囲";
-        inputLabel.textContent = "自由入力欄 [a, b]";
+        inputLabel.textContent = "[ , ]";
+        input.placeholder = "入力4, 入力5";
       } else if (method === 'newton') {
-        header.textContent = "初期推定値";
-        inputLabel.textContent = "数字自由入力欄";
+        input.placeholder = "入力6";
       }
       
-      input.placeholder = "入力";
-      
-      inputContainer.appendChild(header);
       inputContainer.appendChild(inputLabel);
       inputContainer.appendChild(input);
     }
