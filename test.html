@@ -23,6 +23,12 @@
     }
   </script>
   <br>
+  <!DOCTYPE html>
+<html>
+<head>
+  <title>Equation Solver</title>
+</head>
+<body>
   <button onclick="showInputFields('bisection')">二分法</button>
   <button onclick="showInputFields('newton')">ニュートン法</button>
   
@@ -33,20 +39,37 @@
       var inputContainer = document.getElementById("inputContainer");
       inputContainer.innerHTML = "";
       
-      var inputLabel = document.createElement("label");
-      var input = document.createElement("input");
+      var header = document.createElement("h2");
+      var inputLabel1 = document.createElement("label");
+      var inputLabel2 = document.createElement("label");
+      var input1 = document.createElement("input");
+      var input2 = document.createElement("input");
       
       if (method === 'bisection') {
-        inputLabel.textContent = "[ , ]";
-        input.placeholder = "入力4, 入力5";
+        header.textContent = "解の範囲";
+        inputLabel1.textContent = "範囲下限：";
+        inputLabel2.textContent = "範囲上限：";
       } else if (method === 'newton') {
-        input.placeholder = "入力6";
+        header.textContent = "初期推定値";
+        inputLabel1.textContent = "初期推定値：";
       }
       
-      inputContainer.appendChild(inputLabel);
-      inputContainer.appendChild(input);
+      input1.placeholder = "値を入力";
+      input2.placeholder = "値を入力";
+      
+      inputContainer.appendChild(header);
+      inputContainer.appendChild(inputLabel1);
+      inputContainer.appendChild(input1);
+      
+      if (method === 'bisection') {
+        inputContainer.appendChild(inputLabel2);
+        inputContainer.appendChild(input2);
+      }
     }
   </script>
+</body>
+</html>
+
 </body>
 </html>
 
