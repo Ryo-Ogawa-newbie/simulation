@@ -4,125 +4,165 @@
   <title>Equation Solver</title>
 </head>
 <body>
-  <h3>方程式</h3>
-  <p id="equation"></p>
-  
-  <input type="number" id="inputA" placeholder="a">
-  <input type="number" id="inputB" placeholder="b">
-  <input type="number" id="inputC" placeholder="c">
+  <h2>方程式: ax^2 + bx + c = 0</h2>
+  <p>a: <input type="number" id="inputA">, b: <input type="number" id="inputB">, c: <input type="number" id="inputC"></p>
   <button onclick="updateEquation()">更新</button>
   
-  <br>
+  <br><br>
   
-  <button onclick="showRangeInput()">二分法</button>
-  <button onclick="showInitialInput()">ニュートン法</button>
+  <button onclick="showInputFields('bisection')">二分法</button>
+  <button onclick="showInputFields('newton')">ニュートン法</button>
   
-  <div id="methodInput"></div>
+  <div id="methodInputs"></div>
   
-  <br>
+  <br><br>
   
-  <p>試行回数</p>
-  <input type="number" id="inputIterations" placeholder="試行回数">
-  
-  <br>
-  
+  <p>試行回数: <input type="number" id="iterationCount"></p>
   <button onclick="startCalculation()">試行開始</button>
-  <button onclick="resetInputs()">リセット</button>
+  <button onclick="resetAll()">リセット</button>
+  
+  <div id="results"></div>
   
   <script>
-    var equation = "ax^2 + bx + c = 0";
-    var rangeInputs = [];
-    var initialInput = "";
-    var currentMethod = "";
-
+    var equation = {
+      a: null,
+      b: null,
+      c: null
+    };
+    
+    var methodInputs = {
+      bisection: {
+        lower: null,
+        upper: null
+      },
+      newton: {
+        initialGuess: null
+      }
+    };
+    
     function updateEquation() {
-      var a = document.getElementById("inputA").value;
-      var b = document.getElementById("inputB").value;
-      var c = document.getElementById("inputC").value;
-      
-      equation = `${a}x^2 + ${b}x + ${c} = 0`;
-      document.getElementById("equation").textContent = equation;
+      equation.a = parseFloat(document.getElementById("inputA").value);
+      equation.b = parseFloat(document.getElementById("inputB").value);
+      equation.c = parseFloat(document.getElementById("inputC").value);
     }
-
-    function showRangeInput() {
-      currentMethod = "binary";
-      initialInput = "";
+    
+    function showInputFields(method) {
+      var methodInputsContainer = document.getElementById("methodInputs");
+      methodInputsContainer.innerHTML = "";
       
-      var methodInput = document.getElementById("methodInput");
-      methodInput.innerHTML = "";
-
-      var header = document.createElement("h3");
-      header.textContent = "解の範囲";
-      
+      var methodHeader = document.createElement("h3");
       var inputLabel = document.createElement("label");
-      inputLabel.textContent = "数字を自由入力 [a, b]";
+      var input = document.createElement("input");
       
-      var input4 = document.createElement("input");
-      input4.placeholder = "a";
+      if (method === 'bisection') {
+        methodHeader.textContent = "解の範囲";
+        inputLabel.textContent = "数字を自由入力 [a, b]";
+        input.placeholder = "a";
+        input.id = "inputLower";
+        methodInputs.bisection.lower = null;
+        methodInputs.bisection.upper = null;
+      } else if (method === 'newton') {
+        methodHeader.textContent = "初期推定値";
+        inputLabel.textContent = "数字を自由入力";
+        input.placeholder = "初期推定値";
+        input.id = "inputInitial";
+        methodInputs.newton.initialGuess = null;
+      }
       
-      var input5 = document.createElement("input");
-      input5.placeholder = "b";
-      
-      rangeInputs = [input4, input5];
-      
-      methodInput.appendChild(header);
-      methodInput.appendChild(inputLabel);
-      methodInput.appendChild(input4);
-      methodInput.appendChild(input5);
+      methodInputsContainer.appendChild(methodHeader);
+      methodInputsContainer.appendChild(inputLabel);
+      methodInputsContainer.appendChild(input);
     }
-
-    function showInitialInput() {
-      currentMethod = "newton";
-      rangeInputs = [];
-      
-      var methodInput = document.getElementById("methodInput");
-      methodInput.innerHTML = "";
-
-      var header = document.createElement("h3");
-      header.textContent = "初期推定値";
-      
-      var inputLabel = document.createElement("label");
-      inputLabel.textContent = "数字を自由入力";
-      
-      var input6 = document.createElement("input");
-      input6.placeholder = "初期推定値";
-      
-      initialInput = input6;
-      
-      methodInput.appendChild(header);
-      methodInput.appendChild(inputLabel);
-      methodInput.appendChild(input6);
-    }
-
+    
     function startCalculation() {
-      var iterations = document.getElementById("inputIterations").value;
+      var iterationCount = parseInt(document.getElementById("iterationCount").value);
+      var resultsContainer = document.getElementById("results");
+      resultsContainer.innerHTML = "";
       
-      if (currentMethod === "binary" && rangeInputs.length === 2) {
-        var lowerBound = rangeInputs[0].value;
-        var upperBound = rangeInputs[1].value;
-        // 二分法の計算と結果表示
-        // 例: calculateBinary(lowerBound, upperBound, iterations);
-      } else if (currentMethod === "newton" && initialInput !== "") {
-        var initialValue = initialInput.value;
-        // ニュートン法の計算と結果表示
-        // 例: calculateNewton(initialValue, iterations);
-      } else {
-        alert("計算に必要な情報が不足しています。");
+      if (methodInputs.bisection.lower !== null && methodInputs.bisection.upper !== null) {
+        var bisectionResults = document.createElement("p");
+        var bisectionResultText = `二分法の計算結果: [${calculateBisection(equation.a, equation.b, equation.c, methodInputs.bisection.lower, methodInputs.bisection.upper, iterationCount).join(", ")}]`;
+        bisectionResults.textContent = bisectionResultText;
+        resultsContainer.appendChild(bisectionResults);
+      }
+      
+      if (methodInputs.newton.initialGuess !== null) {
+        var newtonResults = document.createElement("p");
+        var newtonResultText = `ニュートン法の計算結果: ${calculateNewton(equation.a, equation.b, equation.c, methodInputs.newton.initialGuess, iterationCount)}`;
+        newtonResults.textContent = newtonResultText;
+        resultsContainer.appendChild(newtonResults);
       }
     }
-
-    function resetInputs() {
-      equation = "ax^2 + bx + c = 0";
-      rangeInputs = [];
-      initialInput = "";
-      currentMethod = "";
+    
+   function calculateBisection(a, b, c, lower, upper, iterationCount) {
+    var results = [];
+    for (var i = 0; i < iterationCount; i++) {
+      var midpoint = (lower + upper) / 2;
+      var fMid = calculateEquation(a, b, c, midpoint);
       
-      document.getElementById("equation").textContent = equation;
+      if (fMid === 0 || (upper - lower) / 2 < 0.00001) {
+        results.push(lower);
+        results.push(upper);
+        break;
+      }
+      
+      if (fMid * calculateEquation(a, b, c, lower) < 0) {
+        upper = midpoint;
+      } else {
+        lower = midpoint;
+      }
+    }
+    return results;
+  }
+    
+    function calculateNewton(a, b, c, initialGuess, iterationCount) {
+    var result = initialGuess;
+    for (var i = 0; i < iterationCount; i++) {
+      var f = calculateEquation(a, b, c, result);
+      var fPrime = calculateDerivative(a, b, result);
+      result = result - f / fPrime;
+    }
+    return result;
+  }
+  
+  // 方程式の計算
+  function calculateEquation(a, b, c, x) {
+    return a * x * x + b * x + c;
+  }
+  
+  // 方程式の導関数の計算
+  function calculateDerivative(a, b, x) {
+    return 2 * a * x + b;
+  }
+    
+    function resetAll() {
+      var methodInputsContainer = document.getElementById("methodInputs");
+      var resultsContainer = document.getElementById("results");
+      
+      methodInputsContainer.innerHTML = "";
+      resultsContainer.innerHTML = "";
+      equation = {
+        a: null,
+        b: null,
+        c: null
+      };
+      
+      methodInputs = {
+        bisection: {
+          lower: null,
+          upper: null
+        },
+        newton: {
+          initialGuess: null
+        }
+      };
+      
       document.getElementById("inputA").value = "";
       document.getElementById("inputB").value = "";
       document.getElementById("inputC").value = "";
-      document.getElementById("inputIterations").value = "";
-      document.getElementById("methodInput").innerHTML = "";
+      document.getElementById("iterationCount").value = "";
+      document.getElementById("inputLower").value = "";
+      document.getElementById("inputInitial").value = "";
     }
   </script>
 </body>
