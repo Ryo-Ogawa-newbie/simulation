@@ -1,9 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Superscript Example</title>
+  <title>Button Example</title>
 </head>
 <body>
-  <p>x<sup>2</sup></p>
+  <button id="button1" onclick="showRange()">ボタン１</button>
+  <button id="button2" onclick="showInitialValues()">ボタン２</button>
+  <button id="resetButton" onclick="reset()">リセット</button>
+  
+  <div id="output"></div>
+  
+  <script>
+    let range = null;
+    let initialValues = null;
+
+    function showRange() {
+      hideInputs();
+      const a = prompt("範囲の下限(a)を入力してください:");
+      const b = prompt("範囲の上限(b)を入力してください:");
+      range = [a, b];
+      document.getElementById("output").innerHTML = `解の範囲: [${a}, ${b}]`;
+    }
+
+    function showInitialValues() {
+      hideInputs();
+      const initialA = prompt("初期推定値を入力してください:");
+      initialValues = initialA;
+      document.getElementById("output").innerHTML = `初期推定値: ${initialA}`;
+    }
+
+    function reset() {
+      hideInputs();
+      range = null;
+      initialValues = null;
+      document.getElementById("output").innerHTML = '';
+    }
+
+    function hideInputs() {
+      document.getElementById("output").innerHTML = '';
+    }
+  </script>
 </body>
 </html>
