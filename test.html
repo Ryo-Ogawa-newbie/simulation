@@ -1,50 +1,138 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Input Example</title>
+  <title>Equation Solver</title>
 </head>
 <body>
-  <button id="button1" onclick="showInputFields('range')">ボタン１</button>
-  <button id="button2" onclick="showInputFields('initial')">ボタン２</button>
-  <button id="resetButton" onclick="resetInputs()">リセット</button>
+  <label for="inputA">a:</label>
+  <input type="number" id="inputA">
+  <label for="inputB">b:</label>
+  <input type="number" id="inputB">
+  <label for="inputC">c:</label>
+  <input type="number" id="inputC">
+  <button onclick="updateCoefficients()">更新</button>
   
-  <div id="inputContainer"></div>
+  <button onclick="showBinarySearchInputs()">二分法</button>
+  <button onclick="showNewtonInputs()">ニュートン法</button>
+  
+  <div id="methodInputs"></div>
+  
+  <div id="results"></div>
   
   <script>
-    function showInputFields(type) {
-      var inputContainer = document.getElementById("inputContainer");
-      inputContainer.innerHTML = "";
+    var coefficients = {
+      a: 0,
+      b: 0,
+      c: 0
+    };
+    
+    var binarySearchInputsShown = false;
+    var newtonInputsShown = false;
+    
+    function updateCoefficients() {
+      coefficients.a = parseFloat(document.getElementById("inputA").value);
+      coefficients.b = parseFloat(document.getElementById("inputB").value);
+      coefficients.c = parseFloat(document.getElementById("inputC").value);
+    }
+    
+    function showBinarySearchInputs() {
+      binarySearchInputsShown = true;
+      newtonInputsShown = false;
       
-      var header = document.createElement("h2");
-      var inputLabel = document.createElement("label");
-      var input1 = document.createElement("input");
-      var input2 = document.createElement("input");
+      var methodInputs = document.getElementById("methodInputs");
+      methodInputs.innerHTML = "";
       
-      if (type === 'range') {
-        header.textContent = "解の範囲";
-        inputLabel.textContent = "数字を自由入力[a, b]";
-      } else if (type === 'initial') {
-        header.textContent = "初期推定値";
-        inputLabel.textContent = "数字を自由入力";
-      }
+      var rangeLabel = document.createElement("label");
+      rangeLabel.textContent = "解の範囲:";
+      var inputLower = document.createElement("input");
+      inputLower.placeholder = "下限";
+      var inputUpper = document.createElement("input");
+      inputUpper.placeholder = "上限";
       
-      input1.placeholder = "a";
-      input2.placeholder = "b";
+      methodInputs.appendChild(rangeLabel);
+      methodInputs.appendChild(inputLower);
+      methodInputs.appendChild(inputUpper);
+    }
+    
+    function showNewtonInputs() {
+      binarySearchInputsShown = false;
+      newtonInputsShown = true;
       
-      inputContainer.appendChild(header);
-      inputContainer.appendChild(inputLabel);
-      inputContainer.appendChild(input1);
+      var methodInputs = document.getElementById("methodInputs");
+      methodInputs.innerHTML = "";
       
-      if (type === 'range') {
-        inputContainer.appendChild(input2);
+      var initialValueLabel = document.createElement("label");
+      initialValueLabel.textContent = "初期推定値:";
+      var inputInitial = document.createElement("input");
+      inputInitial.placeholder = "初期推定値";
+      
+      var maxIterationsLabel = document.createElement("label");
+      maxIterationsLabel.textContent = "試行回数:";
+      var inputMaxIterations = document.createElement("input");
+      inputMaxIterations.placeholder = "試行回数";
+      
+      methodInputs.appendChild(initialValueLabel);
+      methodInputs.appendChild(inputInitial);
+      methodInputs.appendChild(maxIterationsLabel);
+      methodInputs.appendChild(inputMaxIterations);
+    }
+    
+    function solveBinarySearch(lower, upper) {
+      // 二分法で方程式を解く処理をここに実装
+      return [resultLower, resultUpper];
+    }
+    
+    function solveNewton(initialValue, maxIterations) {
+      // ニュートン法で方程式を解く処理をここに実装
+      return [result, iterations];
+    }
+    
+    function startSolving() {
+      var resultsContainer = document.getElementById("results");
+      resultsContainer.innerHTML = "";
+      
+      if (binarySearchInputsShown) {
+        var inputLower = parseFloat(document.querySelector("#methodInputs input:nth-child(2)").value);
+        var inputUpper = parseFloat(document.querySelector("#methodInputs input:nth-child(3)").value);
+        var [resultLower, resultUpper] = solveBinarySearch(inputLower, inputUpper);
+        
+        var resultText = document.createElement("p");
+        resultText.textContent = `計算結果: [${resultLower}, ${resultUpper}]`;
+        resultsContainer.appendChild(resultText);
+      } else if (newtonInputsShown) {
+        var inputInitial = parseFloat(document.querySelector("#methodInputs input:nth-child(2)").value);
+        var inputMaxIterations = parseInt(document.querySelector("#methodInputs input:nth-child(4)").value);
+        var [result, iterations] = solveNewton(inputInitial, inputMaxIterations);
+        
+        var resultText = document.createElement("p");
+        resultText.textContent = `計算結果: ${result} (試行回数: ${iterations})`;
+        resultsContainer.appendChild(resultText);
       }
     }
     
-    function resetInputs() {
-      var inputContainer = document.getElementById("inputContainer");
-      inputContainer.innerHTML = "";
+    function resetAll() {
+      coefficients = {
+        a: 0,
+        b: 0,
+        c: 0
+      };
+      
+      binarySearchInputsShown = false;
+      newtonInputsShown = false;
+      
+      var methodInputs = document.getElementById("methodInputs");
+      methodInputs.innerHTML = "";
+      
+      var resultsContainer = document.getElementById("results");
+      resultsContainer.innerHTML = "";
+      
+      var inputs = document.querySelectorAll("input");
+      inputs.forEach(input => input.value = "");
     }
   </script>
+  
+  <button onclick="startSolving()">試行開始</button>
+  <button onclick="resetAll()">リセット</button>
 </body>
 </html>
 
