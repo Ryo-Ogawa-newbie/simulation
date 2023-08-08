@@ -23,61 +23,33 @@
     }
   </script>
   <br>
-  <button id="bisectionButton" onclick="showBisectionInputs()">二分法</button>
-  <button id="newtonButton" onclick="showNewtonInputs()">ニュートン法</button>
+  <button onclick="showInputFields('bisection')">二分法</button>
+  <button onclick="showInputFields('newton')">ニュートン法</button>
   
   <div id="inputContainer"></div>
   
   <script>
-    var currentMethod = null;
-
-    function showBisectionInputs() {
-      currentMethod = "bisection";
-      resetInputs();
-      
-      var inputContainer = document.getElementById("inputContainer");
-      
-      var rangeLabel = document.createElement("label");
-      rangeLabel.textContent = "解の範囲";
-      
-      var input4 = document.createElement("input");
-      var input5 = document.createElement("input");
-      
-      input4.placeholder = "a";
-      input5.placeholder = "b";
-      
-      var initialLabel = document.createElement("label");
-      initialLabel.textContent = "初期推定値";
-      
-      var input6 = document.createElement("input");
-      input6.placeholder = "初期推定値";
-      
-      inputContainer.appendChild(rangeLabel);
-      inputContainer.appendChild(input4);
-      inputContainer.appendChild(input5);
-      inputContainer.appendChild(initialLabel);
-      inputContainer.appendChild(input6);
-    }
-
-    function showNewtonInputs() {
-      currentMethod = "newton";
-      resetInputs();
-      
-      var inputContainer = document.getElementById("inputContainer");
-      
-      var initialLabel = document.createElement("label");
-      initialLabel.textContent = "初期推定値";
-      
-      var input6 = document.createElement("input");
-      input6.placeholder = "初期推定値";
-      
-      inputContainer.appendChild(initialLabel);
-      inputContainer.appendChild(input6);
-    }
-
-    function resetInputs() {
+    function showInputFields(method) {
       var inputContainer = document.getElementById("inputContainer");
       inputContainer.innerHTML = "";
+      
+      var header = document.createElement("h2");
+      var inputLabel = document.createElement("label");
+      var input = document.createElement("input");
+      
+      if (method === 'bisection') {
+        header.textContent = "解の範囲";
+        inputLabel.textContent = "自由入力欄 [a, b]";
+      } else if (method === 'newton') {
+        header.textContent = "初期推定値";
+        inputLabel.textContent = "数字自由入力欄";
+      }
+      
+      input.placeholder = "入力";
+      
+      inputContainer.appendChild(header);
+      inputContainer.appendChild(inputLabel);
+      inputContainer.appendChild(input);
     }
   </script>
 </body>
