@@ -4,102 +4,146 @@
   <title>Equation Solver</title>
 </head>
 <body>
-  <label>a: </label><input type="number" id="aInput"><br>
-  <label>b: </label><input type="number" id="bInput"><br>
-  <label>c: </label><input type="number" id="cInput"><br>
+  <h2>方程式</h2>
+  <p id="equation">ax^2 + bx + c = 0</p>
+  
+  <label for="inputA">a:</label>
+  <input type="number" id="inputA" placeholder="Enter a">
+  <label for="inputB">b:</label>
+  <input type="number" id="inputB" placeholder="Enter b">
+  <label for="inputC">c:</label>
+  <input type="number" id="inputC" placeholder="Enter c">
   <button onclick="updateEquation()">更新</button>
   
-  <div id="methodButtons">
-    <button onclick="showBisectionInputs()">二分法</button>
-    <button onclick="showNewtonInputs()">ニュートン法</button>
-  </div>
+  <h2>計算方法</h2>
+  <button onclick="showInputFields('bisection')">二分法</button>
+  <button onclick="showInputFields('newton')">ニュートン法</button>
   
-  <div id="inputsContainer"></div>
+  <div id="inputContainer"></div>
   
   <button onclick="startCalculation()">試行開始</button>
-  <button onclick="resetAll()">リセット</button>
-  
-  <div id="output"></div>
+  <button onclick="resetInputs()">リセット</button>
   
   <script>
-    let a, b, c;
+    var calculationType = ""; // "bisection" or "newton"
+    var lowerBound = 0;
+    var upperBound = 0;
+    var initialGuess = 0;
+    var maxIterations = 0;
     
     function updateEquation() {
-      a = parseFloat(document.getElementById("aInput").value);
-      b = parseFloat(document.getElementById("bInput").value);
-      c = parseFloat(document.getElementById("cInput").value);
+      var a = document.getElementById("inputA").value;
+      var b = document.getElementById("inputB").value;
+      var c = document.getElementById("inputC").value;
+      
+      var equationText = a + "x^2 + " + b + "x + " + c + " = 0";
+      document.getElementById("equation").textContent = equationText;
     }
     
-    function showBisectionInputs() {
-      let inputsContainer = document.getElementById("inputsContainer");
-      inputsContainer.innerHTML = "";
+    function showInputFields(type) {
+      calculationType = type;
+      var inputContainer = document.getElementById("inputContainer");
+      inputContainer.innerHTML = "";
       
-      let lowerLabel = document.createElement("label");
-      lowerLabel.textContent = "解の下限: ";
-      let lowerInput = document.createElement("input");
-      lowerInput.type = "number";
-      lowerInput.id = "lowerInput";
-      
-      let upperLabel = document.createElement("label");
-      upperLabel.textContent = "解の上限: ";
-      let upperInput = document.createElement("input");
-      upperInput.type = "number";
-      upperInput.id = "upperInput";
-      
-      inputsContainer.appendChild(lowerLabel);
-      inputsContainer.appendChild(lowerInput);
-      inputsContainer.appendChild(upperLabel);
-      inputsContainer.appendChild(upperInput);
-    }
-    
-    function showNewtonInputs() {
-      let inputsContainer = document.getElementById("inputsContainer");
-      inputsContainer.innerHTML = "";
-      
-      let initialLabel = document.createElement("label");
-      initialLabel.textContent = "初期推定値: ";
-      let initialInput = document.createElement("input");
-      initialInput.type = "number";
-      initialInput.id = "initialInput";
-      
-      inputsContainer.appendChild(initialLabel);
-      inputsContainer.appendChild(initialInput);
+      if (type === 'bisection') {
+        var lowerLabel = document.createElement("label");
+        lowerLabel.textContent = "解の範囲:";
+        var inputLower = document.createElement("input");
+        inputLower.type = "number";
+        inputLower.placeholder = "下限";
+        
+        var upperLabel = document.createElement("label");
+        upperLabel.textContent = "〜";
+        var inputUpper = document.createElement("input");
+        inputUpper.type = "number";
+        inputUpper.placeholder = "上限";
+        
+        inputContainer.appendChild(lowerLabel);
+        inputContainer.appendChild(inputLower);
+        inputContainer.appendChild(upperLabel);
+        inputContainer.appendChild(inputUpper);
+      } else if (type === 'newton') {
+        var guessLabel = document.createElement("label");
+        guessLabel.textContent = "初期推定値:";
+        var inputGuess = document.createElement("input");
+        inputGuess.type = "number";
+        inputGuess.placeholder = "初期推定値";
+        
+        inputContainer.appendChild(guessLabel);
+        inputContainer.appendChild(inputGuess);
+      }
     }
     
     function startCalculation() {
-      let output = document.getElementById("output");
-      output.innerHTML = "";
-      
-      let methodButtons = document.getElementById("methodButtons");
-      methodButtons.style.display = "none";
-      
-      let result = "";
-      
-      if (document.getElementById("lowerInput")) {
-        let lower = parseFloat(document.getElementById("lowerInput").value);
-        let upper = parseFloat(document.getElementById("upperInput").value);
+      if (calculationType === 'bisection') {
+        lowerBound = parseFloat(document.querySelector("input[type='number'][placeholder='下限']").value);
+        upperBound = parseFloat(document.querySelector("input[type='number'][placeholder='上限']").value);
+        maxIterations = parseFloat(document.getElementById("inputIterations").value);
         
-        // Perform bisection calculation
-        result = "Bisection Method Result: [" + lower + ", " + upper + "]";
-      } else if (document.getElementById("initialInput")) {
-        let initial = parseFloat(document.getElementById("initialInput").value);
-        
-        // Perform Newton's method calculation
-        result = "Newton's Method Result: " + initial;
-      }
-      
-      output.textContent = result;
+        // ここに二分法の計算ロジックを追加
+        function bisectionMethod(a, b, maxIterations) {
+  var func = function(x) {
+    return a * x * x + b * x + c;
+  };
+  
+  var epsilon = 0.00001; // 許容誤差
+  var iteration = 0;
+  
+  while (iteration < maxIterations) {
+    var c = (a + b) / 2;
+    
+    if (Math.abs(func(c)) < epsilon) {
+      return c; // 解が見つかった
+    } else if (func(c) * func(a) < 0) {
+      b = c;
+    } else {
+      a = c;
     }
     
-    function resetAll() {
-      let inputsContainer = document.getElementById("inputsContainer");
-      inputsContainer.innerHTML = "";
-      
-      let output = document.getElementById("output");
-      output.innerHTML = "";
-      
-      let methodButtons = document.getElementById("methodButtons");
-      methodButtons.style.display = "block";
+    iteration++;
+  }
+  
+  return null; // 解が見つからなかった
+}
+
+      } else if (calculationType === 'newton') {
+        initialGuess = parseFloat(document.querySelector("input[type='number'][placeholder='初期推定値']").value);
+        maxIterations = parseFloat(document.getElementById("inputIterations").value);
+        
+        // ここにニュートン法の計算ロジックを追加
+        function newtonMethod(initialGuess, maxIterations) {
+  var func = function(x) {
+    return a * x * x + b * x + c;
+  };
+  
+  var derivative = function(x) {
+    return 2 * a * x + b;
+  };
+  
+  var epsilon = 0.00001; // 許容誤差
+  var iteration = 0;
+  var x = initialGuess;
+  
+  while (iteration < maxIterations) {
+    var xNext = x - func(x) / derivative(x);
+    
+    if (Math.abs(xNext - x) < epsilon) {
+      return xNext; // 解が見つかった
+    }
+    
+    x = xNext;
+    iteration++;
+  }
+  
+  return null; // 解が見つからなかった
+}
+
+      }
+    }
+    
+    function resetInputs() {
+      var inputContainer = document.getElementById("inputContainer");
+      inputContainer.innerHTML = "";
     }
   </script>
 </body>
