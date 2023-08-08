@@ -1,31 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Input Display Example</title>
+  <title>Input Example</title>
 </head>
 <body>
-  <button onclick="showRangeInput()">ボタン1</button>
-  <button onclick="showInitialValueInput()">ボタン2</button>
+  <button id="button1" onclick="showInputFields('range')">ボタン１</button>
+  <button id="button2" onclick="showInputFields('initial')">ボタン２</button>
+  <button id="resetButton" onclick="resetInputs()">リセット</button>
   
-  <div id="inputContainer">
-    <!-- Input fields will be displayed here -->
-  </div>
-  
-  <button onclick="resetInputs()">リセット</button>
+  <div id="inputContainer"></div>
   
   <script>
-    function showRangeInput() {
+    function showInputFields(type) {
       var inputContainer = document.getElementById("inputContainer");
-      inputContainer.innerHTML = `
-        <p>解の範囲: <input type="text" id="rangeInput"></p>
-      `;
-    }
-    
-    function showInitialValueInput() {
-      var inputContainer = document.getElementById("inputContainer");
-      inputContainer.innerHTML = `
-        <p>初期推定値: <input type="text" id="initialValueInput"></p>
-      `;
+      inputContainer.innerHTML = "";
+      
+      var header = document.createElement("h2");
+      var inputLabel = document.createElement("label");
+      var input1 = document.createElement("input");
+      var input2 = document.createElement("input");
+      
+      if (type === 'range') {
+        header.textContent = "解の範囲";
+        inputLabel.textContent = "数字を自由入力[a, b]";
+      } else if (type === 'initial') {
+        header.textContent = "初期推定値";
+        inputLabel.textContent = "数字を自由入力";
+      }
+      
+      input1.placeholder = "a";
+      input2.placeholder = "b";
+      
+      inputContainer.appendChild(header);
+      inputContainer.appendChild(inputLabel);
+      inputContainer.appendChild(input1);
+      
+      if (type === 'range') {
+        inputContainer.appendChild(input2);
+      }
     }
     
     function resetInputs() {
