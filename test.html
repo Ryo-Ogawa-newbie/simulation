@@ -23,31 +23,61 @@
     }
   </script>
   <br>
-  <button onclick="showInputs('bisection')">二分法</button>
-  <button onclick="showInputs('newton')">ニュートン法</button>
+  <button id="bisectionButton" onclick="showBisectionInputs()">二分法</button>
+  <button id="newtonButton" onclick="showNewtonInputs()">ニュートン法</button>
   
   <div id="inputContainer"></div>
   
   <script>
-    function showInputs(method) {
+    var currentMethod = null;
+
+    function showBisectionInputs() {
+      currentMethod = "bisection";
+      resetInputs();
+      
+      var inputContainer = document.getElementById("inputContainer");
+      
+      var rangeLabel = document.createElement("label");
+      rangeLabel.textContent = "解の範囲";
+      
+      var input4 = document.createElement("input");
+      var input5 = document.createElement("input");
+      
+      input4.placeholder = "a";
+      input5.placeholder = "b";
+      
+      var initialLabel = document.createElement("label");
+      initialLabel.textContent = "初期推定値";
+      
+      var input6 = document.createElement("input");
+      input6.placeholder = "初期推定値";
+      
+      inputContainer.appendChild(rangeLabel);
+      inputContainer.appendChild(input4);
+      inputContainer.appendChild(input5);
+      inputContainer.appendChild(initialLabel);
+      inputContainer.appendChild(input6);
+    }
+
+    function showNewtonInputs() {
+      currentMethod = "newton";
+      resetInputs();
+      
+      var inputContainer = document.getElementById("inputContainer");
+      
+      var initialLabel = document.createElement("label");
+      initialLabel.textContent = "初期推定値";
+      
+      var input6 = document.createElement("input");
+      input6.placeholder = "初期推定値";
+      
+      inputContainer.appendChild(initialLabel);
+      inputContainer.appendChild(input6);
+    }
+
+    function resetInputs() {
       var inputContainer = document.getElementById("inputContainer");
       inputContainer.innerHTML = "";
-      
-      var rangeInput1 = document.createElement("input");
-      var rangeInput2 = document.createElement("input");
-      var initialInput = document.createElement("input");
-      
-      rangeInput1.placeholder = "[□, □]";
-      rangeInput2.placeholder = "";
-      initialInput.placeholder = "□";
-      
-      if (method === 'bisection') {
-        rangeInput2.placeholder = "□";
-      }
-      
-      inputContainer.appendChild(rangeInput1);
-      inputContainer.appendChild(rangeInput2);
-      inputContainer.appendChild(initialInput);
     }
   </script>
 </body>
