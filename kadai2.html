@@ -6,25 +6,29 @@
   <link rel="stylesheet" href="kadai.css">
 </head>
 <body>
-  <p>a: <span id="aValue">a</span></p>
-  <p>b: <span id="bValue">b</span></p>
-  <p>c: <span id="cValue">c</span></p>
-  
-  <input type="number" id="inputA" placeholder="Enter a number for a">
-  <input type="number" id="inputB" placeholder="Enter a number for b">
-  <input type="number" id="inputC" placeholder="Enter a number for c">
-  <button onclick="updateValues()">Update</button>
-  
-  <script>
-    function updateValues() {
-      var newValueA = document.getElementById("inputA").value;
-      var newValueB = document.getElementById("inputB").value;
-      var newValueC = document.getElementById("inputC").value;
-      
-      document.getElementById("aValue").textContent = newValueA;
-      document.getElementById("bValue").textContent = newValueB;
-      document.getElementById("cValue").textContent = newValueC;
-    }
-  </script>
-</body>
+  <div id="contents">
+      <div id="panel">
+        <div>
+          <p>求めたい方程式</p>
+        </div>
+        <p>a: <span id="aValue">a</span></p>
+        <p>b: <span id="bValue">b</span></p>
+        <p>c: <span id="cValue">c</span></p>
+        
+        <input type="number" id="inputA" placeholder="Enter a number for a">
+        <input type="number" id="inputB" placeholder="Enter a number for b">
+        <input type="number" id="inputC" placeholder="Enter a number for c">
+        <button onclick="updateValues()">Update</button>
+        
+        <script>
+          function updateValues() {
+            var newValueA = document.getElementById("inputA").value;
+            var newValueB = document.getElementById("inputB").value;
+            var newValueC = document.getElementById("inputC").value;
+            document.getElementById("aValue").textContent = newValueA;
+            document.getElementById("bValue").textContent = newValueB;
+            document.getElementById("cValue").textContent = newValueC;
+          }
+        </script>
+      </body>
 </html>
