@@ -5,16 +5,16 @@
 </head>
 <body>
   <h2>求めたい方程式</h2>
-  <p>ax^2 + bx + c = 0</p>
+  <p id="equation">ax^2 + bx + c = 0</p>
   
-  <div>
-    <input type="number" id="inputA" placeholder="a">
-    <input type="number" id="inputB" placeholder="b">
-    <input type="number" id="inputC" placeholder="c">
-    <button onclick="updateEquation()">更新</button>
-  </div>
+  <label for="inputA">a:</label>
+  <input type="number" id="inputA" placeholder="Enter a number for a">
+  <label for="inputB">b:</label>
+  <input type="number" id="inputB" placeholder="Enter a number for b">
+  <label for="inputC">c:</label>
+  <input type="number" id="inputC" placeholder="Enter a number for c">
   
-  <p id="equationDisplay"></p>
+  <button onclick="updateEquation()">更新</button>
   
   <script>
     function updateEquation() {
@@ -22,8 +22,8 @@
       var b = document.getElementById("inputB").value;
       var c = document.getElementById("inputC").value;
       
-      var equationDisplay = document.getElementById("equationDisplay");
-      equationDisplay.textContent = a + "x^2 + " + b + "x + " + c + " = 0";
+      var equationText = a + "x^2 + " + b + "x + " + c + " = 0";
+      document.getElementById("equation").textContent = equationText;
     }
   </script>
 </body>
