@@ -41,11 +41,8 @@
       
       header.textContent = method === 'bisection' ? "解の範囲" : "初期推定値";
       
-      inputLabel1.textContent = "数字を自由入力";
-      inputLabel2.textContent = method === 'bisection' ? "数字を自由入力" : "";
       
-      input1.placeholder = "4";
-      input2.placeholder = "5";
+      [input1.placeholder = "4",input2.placeholder = "5"];
       
       inputContainer.appendChild(header);
       inputContainer.appendChild(inputLabel1);
