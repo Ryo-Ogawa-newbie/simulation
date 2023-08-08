@@ -33,40 +33,25 @@
       var inputContainer = document.getElementById("inputContainer");
       inputContainer.innerHTML = "";
       
-      var rangeHeader = document.createElement("h2");
-      var rangeInputLabel = document.createElement("label");
       var rangeInput1 = document.createElement("input");
       var rangeInput2 = document.createElement("input");
-      
-      var initialHeader = document.createElement("h2");
-      var initialInputLabel = document.createElement("label");
       var initialInput = document.createElement("input");
       
-      if (method === 'bisection') {
-        rangeHeader.textContent = "解の範囲";
-        rangeInputLabel.textContent = "数字を自由入力[□, □]";
-        initialHeader.textContent = "初期推定値";
-        initialInputLabel.textContent = "数字を自由入力";
-      } else if (method === 'newton') {
-        rangeHeader.textContent = "解の範囲";
-        rangeInputLabel.textContent = "リセットされます";
-        initialHeader.textContent = "初期推定値";
-        initialInputLabel.textContent = "数字を自由入力";
-      }
-      
-      rangeInput1.placeholder = "□";
-      rangeInput2.placeholder = "□";
+      rangeInput1.placeholder = "[□, □]";
+      rangeInput2.placeholder = "";
       initialInput.placeholder = "□";
       
-      inputContainer.appendChild(rangeHeader);
-      inputContainer.appendChild(rangeInputLabel);
+      if (method === 'bisection') {
+        rangeInput2.placeholder = "□";
+      }
+      
       inputContainer.appendChild(rangeInput1);
       inputContainer.appendChild(rangeInput2);
-      
-      inputContainer.appendChild(initialHeader);
-      inputContainer.appendChild(initialInputLabel);
       inputContainer.appendChild(initialInput);
     }
   </script>
+</body>
+</html>
+
 </body>
 </html>
