@@ -23,8 +23,8 @@
     }
   </script>
   <br>
-  <button id="bisectionButton" onclick="showInputFields('bisection')">二分法</button>
-  <button id="newtonButton" onclick="showInputFields('newton')">ニュートン法</button>
+  <button onclick="showInputFields('bisection')">二分法</button>
+  <button onclick="showInputFields('newton')">ニュートン法</button>
   
   <div id="inputContainer"></div>
   
@@ -34,22 +34,25 @@
       inputContainer.innerHTML = "";
       
       var header = document.createElement("h2");
-      var inputLabel = document.createElement("label");
+      var inputLabel1 = document.createElement("label");
+      var inputLabel2 = document.createElement("label");
       var input1 = document.createElement("input");
       var input2 = document.createElement("input");
       
-      if (method === 'bisection') {
-        header.textContent = "解の範囲";
-      } else if (method === 'newton') {
-        header.textContent = "初期推定値";
-      }
+      header.textContent = method === 'bisection' ? "解の範囲" : "初期推定値";
       
+      inputLabel1.textContent = "数字を自由入力";
+      inputLabel2.textContent = method === 'bisection' ? "数字を自由入力" : "";
+      
+      input1.placeholder = "4";
+      input2.placeholder = "5";
       
       inputContainer.appendChild(header);
-      inputContainer.appendChild(inputLabel);
+      inputContainer.appendChild(inputLabel1);
       inputContainer.appendChild(input1);
       
       if (method === 'bisection') {
+        inputContainer.appendChild(inputLabel2);
         inputContainer.appendChild(input2);
       }
     }
