@@ -5,25 +5,21 @@
 </head>
 <body>
   <h2>求めたい方程式</h2>
-  <p id="equation">ax^2 + bx + c = 0</p>
+  <p id="equationDisplay">ax^2 + bx + c = 0</p>
   
-  <label for="inputA">a:</label>
-  <input type="number" id="inputA" placeholder="Enter a number for a">
-  <label for="inputB">b:</label>
-  <input type="number" id="inputB" placeholder="Enter a number for b">
-  <label for="inputC">c:</label>
-  <input type="number" id="inputC" placeholder="Enter a number for c">
-  
+  <input type="number" id="inputA" placeholder="a">
+  <input type="number" id="inputB" placeholder="b">
+  <input type="number" id="inputC" placeholder="c">
   <button onclick="updateEquation()">更新</button>
   
   <script>
     function updateEquation() {
-      var a = document.getElementById("inputA").value;
-      var b = document.getElementById("inputB").value;
-      var c = document.getElementById("inputC").value;
+      var inputA = document.getElementById("inputA").value;
+      var inputB = document.getElementById("inputB").value;
+      var inputC = document.getElementById("inputC").value;
       
-      var equationText = a + "x^2 + " + b + "x + " + c + " = 0";
-      document.getElementById("equation").textContent = equationText;
+      var equationDisplay = document.getElementById("equationDisplay");
+      equationDisplay.textContent = inputA + "x^2 + " + inputB + "x + " + inputC + " = 0";
     }
   </script>
 </body>
