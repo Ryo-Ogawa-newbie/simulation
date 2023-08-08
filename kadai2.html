@@ -28,5 +28,46 @@
             document.getElementById("cValue").textContent = newValueC;
           }
         </script>
+
+        <button id="button1" onclick="showInputFields('range')">二分法</button>
+        <button id="button2" onclick="showInputFields('initial')">ニュートン法</button>
+        <button id="resetButton" onclick="resetInputs()">リセット</button>
+        
+        <div id="inputContainer"></div>
+        <script>
+          function showInputFields(type) {
+            var inputContainer = document.getElementById("inputContainer");
+            inputContainer.innerHTML = "";
+            
+            var header = document.createElement("h2");
+            var inputLabel = document.createElement("label");
+            var input1 = document.createElement("input");
+            var input2 = document.createElement("input");
+            
+            if (type === 'range') {
+              header.textContent = "解の範囲";
+              inputLabel.textContent = "数字を自由入力[a, b]";
+            } else if (type === 'initial') {
+              header.textContent = "初期推定値";
+              inputLabel.textContent = "数字を自由入力";
+            }
+      
+            input1.placeholder = "a";
+            input2.placeholder = "b";
+            
+            inputContainer.appendChild(header);
+            inputContainer.appendChild(inputLabel);
+            inputContainer.appendChild(input1);
+            
+            if (type === 'range') {
+              inputContainer.appendChild(input2);
+            }
+          }
+          
+          function resetInputs() {
+            var inputContainer = document.getElementById("inputContainer");
+            inputContainer.innerHTML = "";
+          }
+  </script>
       </body>
 </html>
