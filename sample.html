@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Equation Solver</title>
+</head>
+<body>
+  <button onclick="showInputFields('bisection')">二分法</button>
+  <button onclick="showInputFields('newton')">ニュートン法</button>
+  
+  <div id="bisectionInputContainer"></div>
+  <div id="newtonInputContainer"></div>
+  
+  <h2>試行回数</h2>
+  <input type="number" id="inputTrialCount" placeholder="試行回数">
+  
+  <button onclick="calculate()">試行開始</button>
+  <button onclick="resetAll()">リセット</button>
+  
+  <div id="resultContainer"></div>
+  
+  <script>
+    function showInputFields(method) {
+      var bisectionInputContainer = document.getElementById("bisectionInputContainer");
+      var newtonInputContainer = document.getElementById("newtonInputContainer");
+      bisectionInputContainer.innerHTML = "";
+      newtonInputContainer.innerHTML = "";
+      
+      var header = document.createElement("h2");
+      var inputLabel1 = document.createElement("label");
+      var inputLabel2 = document.createElement("label");
+      var input1 = document.createElement("input");
+      var input2 = document.createElement("input");
+      
+      if (method === 'bisection') {
+        header.textContent = "解の範囲";
+        inputLabel1.textContent = "範囲下限：";
+        inputLabel2.textContent = "範囲上限：";
+        
+        input1.placeholder = "値を入力";
+        input2.placeholder = "値を入力";
+        
+        bisectionInputContainer.appendChild(header);
+        bisectionInputContainer.appendChild(inputLabel1);
+        bisectionInputContainer.appendChild(input1);
+        bisectionInputContainer.appendChild(inputLabel2);
+        bisectionInputContainer.appendChild(input2);
+        
+        newtonInputContainer.innerHTML = ""; // ニュートン法の入力欄をクリア
+      } else if (method === 'newton') {
+        header.textContent = "初期推定値";
+        inputLabel1.textContent = "初期推定値：";
+        
+        input1.placeholder = "値を入力";
+        
+        newtonInputContainer.appendChild(header);
+        newtonInputContainer.appendChild(inputLabel1);
+        newtonInputContainer.appendChild(input1);
+        
+        bisectionInputContainer.innerHTML = ""; // 二分法の入力欄をクリア
+      }
+    }
+    
+    function calculate() {
+      var resultContainer = document.getElementById("resultContainer");
+      resultContainer.innerHTML = "";
+      
+      var trialCount = parseInt(document.getElementById("inputTrialCount").value);
+      
+      var bisectionInputContainer = document.getElementById("bisectionInputContainer");
+      var newtonInputContainer = document.getElementById("newtonInputContainer");
+      
+      if (bisectionInputContainer.children.length > 0) {
+        var lowerBound = parseFloat(bisectionInputContainer.querySelector("input:nth-child(3)").value);
+        var upperBound = parseFloat(bisectionInputContainer.querySelector("input:nth-child(5)").value);
+        
+        var resultLower = document.createElement("p");
+        resultLower.textContent = "解の下限：" + lowerBound;
+        var resultUpper = document.createElement("p");
+        resultUpper.textContent = "解の上限：" + upperBound;
+        
+        resultContainer.appendChild(resultLower);
+        resultContainer.appendChild(resultUpper);
+      } else if (newtonInputContainer.children.length > 0) {
+        var initialGuess = parseFloat(newtonInputContainer.querySelector("input:nth-child(3)").value);
+        
+        var resultNewton = document.createElement("p");
+        resultNewton.textContent = "計算結果：" + initialGuess;
+        
+        resultContainer.appendChild(resultNewton);
+      }
+      
+      var resultTrialCount = document.createElement("p");
+      resultTrialCount.textContent = "試行回数：" + trialCount;
+      resultContainer.appendChild(resultTrialCount);
+    }
+    
+    function resetAll() {
+      var bisectionInputContainer = document.getElementById("bisectionInputContainer");
+      var newtonInputContainer = document.getElementById("newtonInputContainer");
+      var resultContainer = document.getElementById("resultContainer");
+      
+      bisectionInputContainer.innerHTML = "";
+      newtonInputContainer.innerHTML = "";
+      resultContainer.innerHTML = "";
+      
+      document.getElementById("inputTrialCount").value = "";
+    }
+  </script>
+</body>
+</html>
