@@ -57,8 +57,8 @@
       if (method === 'bisection') {
         methodHeader.textContent = "解の範囲";
         inputLabel.textContent = "数字を自由入力 [a, b]";
-        input.placeholder = "a";
-        input.id = "inputLower";
+        input.placeholder = "b";
+        input.id = "inputUpper";  // IDを修正
         methodInputs.bisection.lower = null;
         methodInputs.bisection.upper = null;
       } else if (method === 'newton') {
@@ -74,27 +74,9 @@
       methodInputsContainer.appendChild(input);
     }
     
-    function startCalculation() {
-      var iterationCount = parseInt(document.getElementById("iterationCount").value);
-      var resultsContainer = document.getElementById("results");
-      resultsContainer.innerHTML = "";
-      
-      if (methodInputs.bisection.lower !== null && methodInputs.bisection.upper !== null) {
-        var bisectionResults = document.createElement("p");
-        var bisectionResultText = `二分法の計算結果: [${calculateBisection(equation.a, equation.b, equation.c, methodInputs.bisection.lower, methodInputs.bisection.upper, iterationCount).join(", ")}]`;
-        bisectionResults.textContent = bisectionResultText;
-        resultsContainer.appendChild(bisectionResults);
-      }
-      
-      if (methodInputs.newton.initialGuess !== null) {
-        var newtonResults = document.createElement("p");
-        var newtonResultText = `ニュートン法の計算結果: ${calculateNewton(equation.a, equation.b, equation.c, methodInputs.newton.initialGuess, iterationCount)}`;
-        newtonResults.textContent = newtonResultText;
-        resultsContainer.appendChild(newtonResults);
-      }
-    }
-    
-   function calculateBisection(a, b, c, lower, upper, iterationCount) {
+
+  // 二分法の計算
+  function calculateBisection(a, b, c, lower, upper, iterationCount) {
     var results = [];
     for (var i = 0; i < iterationCount; i++) {
       var midpoint = (lower + upper) / 2;
@@ -114,8 +96,9 @@
     }
     return results;
   }
-    
-    function calculateNewton(a, b, c, initialGuess, iterationCount) {
+  
+  // ニュートン法の計算
+  function calculateNewton(a, b, c, initialGuess, iterationCount) {
     var result = initialGuess;
     for (var i = 0; i < iterationCount; i++) {
       var f = calculateEquation(a, b, c, result);
@@ -134,37 +117,7 @@
   function calculateDerivative(a, b, x) {
     return 2 * a * x + b;
   }
-    
-    function resetAll() {
-      var methodInputsContainer = document.getElementById("methodInputs");
-      var resultsContainer = document.getElementById("results");
-      
-      methodInputsContainer.innerHTML = "";
-      resultsContainer.innerHTML = "";
-      equation = {
-        a: null,
-        b: null,
-        c: null
-      };
-      
-      methodInputs = {
-        bisection: {
-          lower: null,
-          upper: null
-        },
-        newton: {
-          initialGuess: null
-        }
-      };
-      
-      document.getElementById("inputA").value = "";
-      document.getElementById("inputB").value = "";
-      document.getElementById("inputC").value = "";
-      document.getElementById("iterationCount").value = "";
-      document.getElementById("inputLower").value = "";
-      document.getElementById("inputInitial").value = "";
-    }
+</script>
   </script>
 </body>
 </html>
-
